@@ -1,0 +1,302 @@
+﻿@page "/"
+@inject IJSRuntime JSRuntime;
+
+<style>
+
+
+    .outerdiv div {
+        width: 50px;
+        height: 50px;
+        border: 1px solid black;
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+    }
+
+    .grid-container {
+        display: grid;
+        background-color: #2196F3;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .grid-item {
+        background-color: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(0, 0, 0, 0.8);
+        font-size: 30px;
+        text-align: center;
+        position: static;
+    }
+</style>
+
+<body>
+
+    <div class="grid-container" 
+         tabindex="0"
+         style="grid-template-columns: @(Multiply("auto ", size));" 
+         @onmousewheel="ChangeSize"
+         @onkeypress="ChangeNumPaths">
+        @for (int i = 0; i < size; i++)
+        {
+            @for (int j = 0; j < size; j++)
+            {
+                <div class="grid-item"
+                        style="background-color: @(GetColour(i,j))">
+                </div>
+
+
+            }
+        }
+    </div>
+</body>
+
+
+
+
+@code{
+
+    readonly Dictionary<int, string> Colours = new Dictionary<int, string>
+    {
+        {0,"#990099"},
+        {1,"#e64500"},
+        {2,"#f7d80f"},
+        {3,"#00cf11"},
+        {4,"#0080cf"}
+    };
+
+    List<int[][]> paths = new List<int[][]>
+    {
+        new int[][]{
+            new int[]{0,0},
+            new int[]{0,0},
+            new int[]{0,0},
+            new int[]{0,0},
+            new int[]{0,0},
+        },
+        new int[][]{
+            new int[]{5,5},
+            new int[]{5,4},
+            new int[]{5,3},
+            new int[]{5,2},
+            new int[]{5,1},
+        },
+    };
+
+
+    int size = 10;
+
+    Random random = new Random((int)(DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) % 100000);
+
+    private void ChangeSize(WheelEventArgs e)
+    {
+        size = Math.Clamp(size + ((int)e.DeltaY / 10), 5, 100);
+
+    }
+
+    private void ChangeNumPaths(KeyboardEventArgs e)
+    {
+        switch(e.Key)
+        {
+            case "1":
+                paths = new List<int[][]>
+                { new int[][]{
+                    new int[]{0,0},
+                    new int[]{0,0},
+                    new int[]{0,0},
+                    new int[]{0,0},
+                    new int[]{0,0}} };
+                break;
+            case "2":
+                paths = new List<int[][]>
+                { new int[][]{
+                    new int[]{0,0},
+                    new int[]{0,0},
+                    new int[]{0,0},
+                    new int[]{0,0},
+                    new int[]{0,0}},
+                    new int[][]{
+                    new int[]{1,1},
+                    new int[]{1,1},
+                    new int[]{1,1},
+                    new int[]{1,1},
+                    new int[]{1,1}} };
+                break;
+            case "3":
+                paths = new List<int[][]>
+                { new int[][]{
+                    new int[]{0,0},
+                    new int[]{0,0},
+                    new int[]{0,0},
+                    new int[]{0,0},
+                    new int[]{0,0}},
+                    new int[][]{
+                    new int[]{1,1},
+                    new int[]{1,1},
+                    new int[]{1,1},
+                    new int[]{1,1},
+                    new int[]{1,1}},
+                    new int[][]{
+                    new int[]{2,2},
+                    new int[]{2,2},
+                    new int[]{2,2},
+                    new int[]{2,2},
+                    new int[]{2,2}} };
+                break;
+
+            case "4":
+                paths = new List<int[][]>
+                { new int[][]{
+                    new int[]{0,0},
+                    new int[]{0,0},
+                    new int[]{0,0},
+                    new int[]{0,0},
+                    new int[]{0,0}},
+                    new int[][]{
+                    new int[]{1,1},
+                    new int[]{1,1},
+                    new int[]{1,1},
+                    new int[]{1,1},
+                    new int[]{1,1}},
+                    new int[][]{
+                    new int[]{2,2},
+                    new int[]{2,2},
+                    new int[]{2,2},
+                    new int[]{2,2},
+                    new int[]{2,2}},
+                    new int[][]{
+                    new int[]{3,3},
+                    new int[]{3,3},
+                    new int[]{3,3},
+                    new int[]{3,3},
+                    new int[]{3,3}} };
+                break;
+
+
+            case "5":
+                paths = new List<int[][]>
+                { new int[][]{
+                    new int[]{0,0},
+                    new int[]{0,0},
+                    new int[]{0,0},
+                    new int[]{0,0},
+                    new int[]{0,0}},
+                    new int[][]{
+                    new int[]{1,1},
+                    new int[]{1,1},
+                    new int[]{1,1},
+                    new int[]{1,1},
+                    new int[]{1,1}},
+                    new int[][]{
+                    new int[]{2,2},
+                    new int[]{2,2},
+                    new int[]{2,2},
+                    new int[]{2,2},
+                    new int[]{2,2}},
+                    new int[][]{
+                    new int[]{3,3},
+                    new int[]{3,3},
+                    new int[]{3,3},
+                    new int[]{3,3},
+                    new int[]{3,3}},
+                    new int[][]{
+                    new int[]{4,4},
+                    new int[]{4,4},
+                    new int[]{4,4},
+                    new int[]{4,4},
+                    new int[]{4,4}} };
+                break;
+
+
+        }
+    }
+
+    [JSInvokable("Move")]
+    public void Move()
+    {
+        for(int i = 0; i < paths.Count(); i++)
+        {
+            MovePath(i);
+        }
+
+        this.StateHasChanged();
+    }
+
+    private void MovePath(int k)
+    {
+        for (int i = paths[k].Length - 1; i > 0; i--)
+        {
+            paths[k][i][0] = paths[k][i - 1][0];
+            paths[k][i][1] = paths[k][i - 1][1];
+        }
+
+        List<int[]> possibleMoves = new List<int[]>();
+
+        if (paths[k][0][0] != 0)
+        {
+            possibleMoves.Add(new int[] { -1, 0 });
+        }
+        if (paths[k][0][0] != size - 1)
+        {
+            possibleMoves.Add(new int[] { 1, 0 });
+        }
+        if (paths[k][0][1] != 0)
+        {
+            possibleMoves.Add(new int[] { 0, -1 });
+        }
+        if (paths[k][0][1] != size - 1)
+        {
+            possibleMoves.Add(new int[] { 0, 1 });
+        }
+
+        int[] Move = possibleMoves[random.Next(0, possibleMoves.Count())];
+        paths[k][0][0] += Move[0];
+        paths[k][0][1] += Move[1];
+
+        var a = possibleMoves.Count();
+    }
+
+
+
+    private string GetColour(int y, int x)
+    {
+        for (int i = 0; i < paths.Count(); i++)
+        {
+            for (int j = 0; j < paths[i].Length; j++)
+            {
+                if (y == paths[i][j][0] && x == paths[i][j][1])
+                {
+                    string transparency = (15 - 2 * j).ToString("X");
+                    string colour = Colours[i] + transparency + transparency;
+                    return colour;
+                }
+            }
+        }
+        return "";
+    }
+
+
+    public static string Multiply(string source, int multiplier)
+    {
+        string output = "";
+        for (int i = 0; i < multiplier; i++)
+        {
+            output += source;
+        }
+        return output;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+
+        if (firstRender)
+        {
+            var dotNetReference = DotNetObjectReference.Create(this);
+            JSRuntime.InvokeVoidAsync("jsTimer", dotNetReference);
+        }
+    }
+
+}
